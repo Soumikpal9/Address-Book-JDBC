@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AddressBookDBService {
+	private int connectionCounter = 0;
 	private static AddressBookDBService addBookDB;
 	private PreparedStatement addBookDataStatement;
 	
@@ -27,11 +28,14 @@ public class AddressBookDBService {
 	}
 	
 	private Connection getConnection() throws SQLException {
+		connectionCounter++;
 		String jdbcURL = "jdbc:mysql://localhost:3306/addressbook_service?useSSL=false";
 		String userName = "root";
 		String password = "Resurrection@5";
 		Connection connection;
+		System.out.println("Processing Thread : " + Thread.currentThread().getName() + "Connecting to database with Id : " + connectionCounter);
 		connection = DriverManager.getConnection(jdbcURL, userName, password);
+		System.out.println("Processing Thread : " + Thread.currentThread().getName() + "Connecting to database with Id : " + connectionCounter + "Connection is successful!");
 		return connection;
 	}
 	
