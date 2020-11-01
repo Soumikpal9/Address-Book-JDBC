@@ -10,22 +10,33 @@ import junit.framework.Assert;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookTest {
 	@Test
     public void givenEmpPayrollDataInDB_ShouldMatchEmpCount() {
     	AddressBookService addBookService = new AddressBookService();
-    	List<AddressBookData> addBookData = addBookService.readAddresBookData(IOService.DB_IO);
+    	List<AddressBookData> addBookData = addBookService.readAddressBookData(IOService.DB_IO);
     	Assert.assertEquals(6, addBookData.size());
     }
 	
 	@Test 
     public void givenNewCity_WhenUpdated_shouldMatchWithDB() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	addBookService.updateContactsCity("Soumik", "Noida");
     	AddressBookData contact = addBookService.checkAddressBookDataInSyncWithDB("Soumik");
     	Assert.assertEquals("Noida", contact.city);
+    }
+	
+	@Test 
+    public void givenDateRange_WhenRetrieved_ShouldMatchContactsCount() {
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddressBookData(IOService.DB_IO);
+    	LocalDate startDate = LocalDate.of(2017, 01, 01);
+    	LocalDate endDate = LocalDate.now();
+    	List<AddressBookData> addBookData = addBookService.readAddressBookForDateRange(IOService.DB_IO, startDate, endDate);
+    	Assert.assertEquals(6, addBookData.size());
     }
 }

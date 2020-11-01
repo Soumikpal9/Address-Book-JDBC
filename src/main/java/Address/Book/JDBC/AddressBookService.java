@@ -3,6 +3,7 @@
  */
 package Address.Book.JDBC;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookService {
@@ -22,7 +23,7 @@ public class AddressBookService {
 		this.addBookList = addBookList;
 	}
 	
-	public List<AddressBookData> readAddresBookData(IOService ioService) {
+	public List<AddressBookData> readAddressBookData(IOService ioService) {
 		if(ioService.equals(IOService.DB_IO)) {
 			this.addBookList = addBookDB.readData();
 		}
@@ -42,5 +43,12 @@ public class AddressBookService {
 				  .filter(con -> con.firstName.equals(firstName))
 				  .findFirst()
 				  .orElse(null);
+	}
+	
+	public List<AddressBookData> readAddressBookForDateRange(IOService ioService, LocalDate startDate, LocalDate endDate) {
+		if(ioService.equals(IOService.DB_IO)) {
+			return addBookDB.getAddressBookForDateRange(startDate, endDate);
+		}
+		return null;
 	}
 }

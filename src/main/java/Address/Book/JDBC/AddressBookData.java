@@ -1,5 +1,7 @@
 package Address.Book.JDBC;
 
+import java.time.LocalDate;
+
 public class AddressBookData {
 	public String firstName;
 	public String lastName;
@@ -9,6 +11,7 @@ public class AddressBookData {
 	public String zipcode;
 	public String phone;
 	public String email;
+	public LocalDate start;
 	
 	public AddressBookData() {}
 	
@@ -21,5 +24,10 @@ public class AddressBookData {
 		this.zipcode = zipcode;
 		this.phone = phone;
 		this.email = email;
+	}
+	
+	public AddressBookData(String firstName, String lastName, String address, String city, String state, String zipcode, String phone, String email, LocalDate start) {
+		this(firstName, lastName, address, city, state, zipcode, phone, email);
+		this.start = start;
 	}
 }
